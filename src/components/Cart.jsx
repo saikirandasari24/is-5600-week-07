@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import PurchaseForm from './PurchaseForm';
+import { useCart } from '../state/CartProvider';
 
 const Cart = () => {
   // TODO - get cart items from context
-  const cartItems = [];
-  const removeFromCart = () => {};
-  const updateItemQuantity = () => {};
-  const getCartTotal = () => {};
 
-  return (
+const {cartItems, removeFromCart, getCartTotal, updateItemQuantity} = useCart();
+
+
+   return (
     <div className="center mw7 mv4">
       <div className="bg-white pa3 mb3">
         <h2 className="f2 mb2">Cart</h2>

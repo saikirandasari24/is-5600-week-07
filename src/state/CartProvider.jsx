@@ -1,9 +1,10 @@
+import { type } from '@testing-library/user-event/dist/type'
 import React, { useReducer, useContext } from 'react'
 
 // Initialize the context
 const CartContext = React.createContext()
 
-// Definte the default state
+// Define the default state
 const initialState = {
   itemsById: {},
   allItems: [],
@@ -50,6 +51,24 @@ const cartReducer = (state, action) => {
       }
       return updatedState
     
+      case UPDATE_ITEM_QUANTITY:
+        const currentItem = state.itemById[payload.id]
+        const updateItemState = {
+          ...state,
+          itemsById: {
+            ...state.itemById,
+            [payload_.id]: {
+              ...currentItem,
+              quantity: currentItem.quantity + payload.quantity,
+                },
+          }
+          
+        }
+
+        return updateItemState;
+        
+
+
     default:
       return state
   }
@@ -71,12 +90,12 @@ const CartProvider = ({ children }) => {
 
   // todo Update the quantity of an item in the cart
   const updateItemQuantity = (productId, quantity) => {
-    // todo
+    dispatch({type: UPDATE_ITEM_QUANTITY, payload: {_id: productId, quantity}})
   }
 
   // todo Get the total price of all items in the cart
   const getCartTotal = () => {
-    // todo
+    return getCartItems().reduce((acc, item) => acc + item.price * item.quantity,0);
   }
 
   const getCartItems = () => {
